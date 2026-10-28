@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply text-ink antialiased;
+  background: #f6f7f9;
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: #ffe8cc; }
+
+@layer components {
+  .prose-lesson p { @apply mb-4 leading-7 text-ink-soft; }
+  .prose-lesson code { @apply rounded bg-slate-100 px-1 py-0.5 font-mono text-[0.9em] text-ink; }
+  .prose-lesson ul { @apply mb-4 list-disc pl-6 text-ink-soft; }
+  .prose-lesson li { @apply mb-1; }
+  .prose-lesson strong { @apply font-semibold text-ink; }
+}
