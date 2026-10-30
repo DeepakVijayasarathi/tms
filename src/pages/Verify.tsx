@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Award, CheckCircle2, Linkedin, Printer, ShieldAlert } from "lucide-react";
-import { api, post } from "@/lib/api";
+import { api, apiUrl, post } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
 import { date } from "@/lib/format";
 import { Button, Spinner } from "@/components/ui";
@@ -69,7 +69,7 @@ export function Verify() {
               <div className="border-t border-slate-300 pt-2 font-medium">{c.issuerName}</div>
               <div className="text-ink-mute">{c.issuerPartner ? "Issuing partner · with TMS Learning" : "Issuer"}</div>
             </div>
-            <img src={`/api/v1/certificates/${c.credentialCode}/qr.png`} alt="QR code linking to this verification page" className="mx-auto h-28 w-28" />
+            <img src={apiUrl(`/certificates/${c.credentialCode}/qr.png`)} alt="QR code linking to this verification page" className="mx-auto h-28 w-28" />
             <div>
               <div className="border-t border-slate-300 pt-2 font-medium">{date(c.issuedAt)}</div>
               <div className="text-ink-mute">Issued{c.expiresAt && ` · valid until ${date(c.expiresAt)}`}</div>

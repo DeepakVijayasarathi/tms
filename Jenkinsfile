@@ -7,6 +7,7 @@ pipeline {
         GITHUB_REPO    = 'https://github.com/DeepakVijayasarathi/tms.git'
         DOCKER_NETWORK = 'tms-network'
         HOST_PORT      = '8080'
+        API_BASE_URL   = 'https://tmsapi.meettomanage.cloud'
     }
 
     triggers {
@@ -28,6 +29,7 @@ pipeline {
             steps {
                 sh '''
                     docker build \
+                      --build-arg "VITE_API_BASE_URL=${API_BASE_URL}" \
                       --tag "${IMAGE_NAME}:latest" \
                       --file Dockerfile .
                 '''

@@ -1,4 +1,7 @@
 const TOKEN_KEY = "tms.token";
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "https://tmsapi.meettomanage.cloud").replace(/\/$/, "");
+
+export const apiUrl = (path: string): string => `${API_BASE_URL}/api/v1${path}`;
 
 export class ApiError extends Error {
   constructor(public status: number, message: string, public body?: unknown) {
@@ -24,14 +27,14 @@ export const tokenStore = {
   },
 };
 
-/** Typed fetch wrapper for /api/v1. Errors surface the server's problem-details title. */
+/** Typed fetch wrapper for the TMS API. Errors surface the server's problem-details title. */
 export async function api<T = unknown>(path: string, init: { method?: string; body?: unknown } = {}): Promise<T> {
   const headers: Record<string, string> = {};
   const token = tokenStore.get();
   if (token) headers.Authorization = `Bearer ${token}`;
   if (init.body !== undefined) headers["Content-Type"] = "application/json";
 
-  const res = await fetch(`/api/v1${path}`, {
+  const res = await fetch(apiUrl(path), {
     method: init.method ?? (init.body !== undefined ? "POST" : "GET"),
     headers,
     body: init.body !== undefined ? JSON.stringify(init.body) : undefined,
